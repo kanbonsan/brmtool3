@@ -1,3 +1,11 @@
+<script lang="ts">
+import Layout from '@/Layouts/MainLayout.vue'
+
+export default {
+    layout: Layout
+}
+</script>
+
 <script setup lang="ts">
 import { ref } from "vue"
 import { Head } from "@inertiajs/vue3"
@@ -10,46 +18,38 @@ const drawer = ref(null)
 <template>
     <Head title="Vuetify Test" />
 
-    <v-app id="tool">
-        <v-system-bar>
-
-            <v-spacer></v-spacer>
-
-            <v-btn v-if="canLogin">Login</v-btn>
-            <v-btn v-if="canRegister">Register</v-btn>
-
-            <v-icon>mdi-square</v-icon>
-
-            <v-icon>mdi-circle</v-icon>
-
-            <v-icon>mdi-triangle</v-icon>
-        </v-system-bar>
-
-        <v-app-bar>
-            <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-
-            <v-toolbar-title>BRMTOOL3</v-toolbar-title>
-        </v-app-bar>
-
-        <v-navigation-drawer v-model="drawer" temporary>
-            <!--  -->
-        </v-navigation-drawer>
-
-        <v-main class="bg-grey-lighten-2">
-            <v-container>
-                <v-row>
-                    <template v-for="n in 4" :key="n">
-                        <v-col class="mt-2" cols="12">
-                            <strong>Category {{ n }}</strong>
-                        </v-col>
-
-                        <v-col v-for="j in 6" :key="`${n}${j}`" cols="6" md="2">
-                            <v-sheet height="150"></v-sheet>
-                        </v-col>
-                    </template>
-                </v-row>
-            </v-container>
-        </v-main>
-    </v-app>
+    <h1>THIS IS BRMTOOL3</h1>
+    <h1>THIS IS BRMTOOL3</h1>
+    <h1>THIS IS BRMTOOL3</h1>
+    <h1>THIS IS BRMTOOL3</h1>
+    <h2>THIS IS BRMTOOL3</h2>
+    <h2>THIS IS BRMTOOL3</h2>
+    <h2>THIS IS BRMTOOL3</h2>
+    <h3>THIS IS BRMTOOL3</h3>
+    <h3>THIS IS BRMTOOL3</h3>
+    <h3>THIS IS BRMTOOL3</h3>
+    <h3>THIS IS BRMTOOL3</h3><h1>THIS IS BRMTOOL3</h1>
+    <h1>THIS IS BRMTOOL3</h1>
+    <h1>THIS IS BRMTOOL3</h1>
+    <h1>THIS IS BRMTOOL3</h1>
+    <h2>THIS IS BRMTOOL3</h2>
+    <h2>THIS IS BRMTOOL3</h2>
+    <h2>THIS IS BRMTOOL3</h2>
+    <h3>THIS IS BRMTOOL3</h3>
+    <h3>THIS IS BRMTOOL3</h3>
+    <h3>THIS IS BRMTOOL3</h3>
+    <h3>THIS IS BRMTOOL3</h3>
+    <h1>THIS IS BRMTOOL3</h1>
+    <h1>THIS IS BRMTOOL3</h1>
+    <h1>THIS IS BRMTOOL3</h1>
+    <h1>THIS IS BRMTOOL3</h1>
+    <h2>THIS IS BRMTOOL3</h2>
+    <h2>THIS IS BRMTOOL3</h2>
+    <h2>THIS IS BRMTOOL3</h2>
+    <h3>THIS IS BRMTOOL3</h3>
+    <h3>THIS IS BRMTOOL3</h3>
+    <h3>THIS IS BRMTOOL3</h3>
+    <h3>THIS IS BRMTOOL3</h3>
+    <h3>THIS IS BRMTOOL3</h3><h3>THIS IS BRMTOOL3</h3><h3>THIS IS BRMTOOL3</h3><h3>THIS IS BRMTOOL3</h3><h3>THIS IS BRMTOOL3</h3><h3>THIS IS BRMTOOL3</h3>
 </template>
 
