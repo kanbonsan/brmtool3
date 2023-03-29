@@ -1,6 +1,8 @@
-<script setup>
-import {ref} from 'vue'
-import { Head } from '@inertiajs/vue3';
+<script setup lang="ts">
+import { ref } from "vue"
+import { Head } from "@inertiajs/vue3"
+
+const props = defineProps(['canLogin','canRegister','laravelVersion','phpVersion', 'auth'])
 
 const drawer = ref(null)
 </script>
@@ -8,54 +10,46 @@ const drawer = ref(null)
 <template>
     <Head title="Vuetify Test" />
 
+    <v-app id="tool">
+        <v-system-bar>
 
-  <v-app id="tool">
-    <v-system-bar>
-      <v-spacer></v-spacer>
+            <v-spacer></v-spacer>
 
-      <v-icon>mdi-square</v-icon>
+            <v-btn v-if="canLogin">Login</v-btn>
+            <v-btn v-if="canRegister">Register</v-btn>
 
-      <v-icon>mdi-circle</v-icon>
+            <v-icon>mdi-square</v-icon>
 
-      <v-icon>mdi-triangle</v-icon>
-    </v-system-bar>
+            <v-icon>mdi-circle</v-icon>
 
-    <v-app-bar>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+            <v-icon>mdi-triangle</v-icon>
+        </v-system-bar>
 
-      <v-toolbar-title>BRMTOOL3</v-toolbar-title>
-    </v-app-bar>
+        <v-app-bar>
+            <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-    <v-navigation-drawer
-      v-model="drawer"
-      temporary
-    >
-      <!--  -->
-    </v-navigation-drawer>
+            <v-toolbar-title>BRMTOOL3</v-toolbar-title>
+        </v-app-bar>
 
-    <v-main class="bg-grey-lighten-2">
-      <v-container>
-        <v-row>
-          <template v-for="n in 4" :key="n">
-            <v-col
-              class="mt-2"
-              cols="12"
-            >
-              <strong>Category {{ n }}</strong>
-            </v-col>
+        <v-navigation-drawer v-model="drawer" temporary>
+            <!--  -->
+        </v-navigation-drawer>
 
-            <v-col
-              v-for="j in 6"
-              :key="`${n}${j}`"
-              cols="6"
-              md="2"
-            >
-              <v-sheet height="150"></v-sheet>
-            </v-col>
-          </template>
-        </v-row>
-      </v-container>
-    </v-main>
-  </v-app>
+        <v-main class="bg-grey-lighten-2">
+            <v-container>
+                <v-row>
+                    <template v-for="n in 4" :key="n">
+                        <v-col class="mt-2" cols="12">
+                            <strong>Category {{ n }}</strong>
+                        </v-col>
+
+                        <v-col v-for="j in 6" :key="`${n}${j}`" cols="6" md="2">
+                            <v-sheet height="150"></v-sheet>
+                        </v-col>
+                    </template>
+                </v-row>
+            </v-container>
+        </v-main>
+    </v-app>
 </template>
 
