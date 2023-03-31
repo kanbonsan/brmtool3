@@ -1,8 +1,8 @@
 <script lang="ts">
-import Layout from '@/Layouts/MainLayout.vue'
+import Layout from "@/Layouts/MainLayout.vue"
 
 export default {
-    layout: Layout
+    layout: Layout,
 }
 </script>
 
@@ -10,46 +10,19 @@ export default {
 import { ref } from "vue"
 import { Head } from "@inertiajs/vue3"
 
-const props = defineProps(['canLogin','canRegister','laravelVersion','phpVersion', 'auth'])
-
-const drawer = ref(null)
+const props = defineProps([
+    "canLogin",
+    "canRegister",
+    "laravelVersion",
+    "phpVersion",
+    "auth",
+])
 </script>
 
 <template>
-    <Head title="Vuetify Test" />
-
-    <h1>THIS IS BRMTOOL3</h1>
-    <h1>THIS IS BRMTOOL3</h1>
-    <h1>THIS IS BRMTOOL3</h1>
-    <h1>THIS IS BRMTOOL3</h1>
-    <h2>THIS IS BRMTOOL3</h2>
-    <h2>THIS IS BRMTOOL3</h2>
-    <h2>THIS IS BRMTOOL3</h2>
-    <h3>THIS IS BRMTOOL3</h3>
-    <h3>THIS IS BRMTOOL3</h3>
-    <h3>THIS IS BRMTOOL3</h3>
-    <h3>THIS IS BRMTOOL3</h3><h1>THIS IS BRMTOOL3</h1>
-    <h1>THIS IS BRMTOOL3</h1>
-    <h1>THIS IS BRMTOOL3</h1>
-    <h1>THIS IS BRMTOOL3</h1>
-    <h2>THIS IS BRMTOOL3</h2>
-    <h2>THIS IS BRMTOOL3</h2>
-    <h2>THIS IS BRMTOOL3</h2>
-    <h3>THIS IS BRMTOOL3</h3>
-    <h3>THIS IS BRMTOOL3</h3>
-    <h3>THIS IS BRMTOOL3</h3>
-    <h3>THIS IS BRMTOOL3</h3>
-    <h1>THIS IS BRMTOOL3</h1>
-    <h1>THIS IS BRMTOOL3</h1>
-    <h1>THIS IS BRMTOOL3</h1>
-    <h1>THIS IS BRMTOOL3</h1>
-    <h2>THIS IS BRMTOOL3</h2>
-    <h2>THIS IS BRMTOOL3</h2>
-    <h2>THIS IS BRMTOOL3</h2>
-    <h3>THIS IS BRMTOOL3</h3>
-    <h3>THIS IS BRMTOOL3</h3>
-    <h3>THIS IS BRMTOOL3</h3>
-    <h3>THIS IS BRMTOOL3</h3>
-    <h3>THIS IS BRMTOOL3</h3><h3>THIS IS BRMTOOL3</h3><h3>THIS IS BRMTOOL3</h3><h3>THIS IS BRMTOOL3</h3><h3>THIS IS BRMTOOL3</h3><h3>THIS IS BRMTOOL3</h3>
+    <div>
+        <h1>HELLO VUE</h1>
+    </div>
+    
 </template>
 

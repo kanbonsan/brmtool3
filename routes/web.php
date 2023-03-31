@@ -3,7 +3,6 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 /*
@@ -31,11 +30,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/vuetify', function () {
-    return Inertia::render('Vuetify', [
-        'loggedIn' => Auth::check(),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return Inertia::render('Vuetify');
 });
 
 Route::middleware('auth')->group(function () {
