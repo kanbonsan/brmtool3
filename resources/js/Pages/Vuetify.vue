@@ -16,6 +16,7 @@ const props = defineProps([
     "laravelVersion",
     "phpVersion",
     "auth",
+    "isAuthenticated",
 ])
 </script>
 

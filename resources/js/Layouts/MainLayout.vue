@@ -14,7 +14,9 @@
 
                 <v-spacer></v-spacer>
 
-                <v-responsive max-width="260"><Link href='/login'> Login </Link></v-responsive>
+                <v-responsive max-width="260">
+                    <v-btn @click="loginDialog = true"> Login </v-btn>
+                </v-responsive>
             </v-container>
         </v-app-bar>
 
@@ -47,25 +49,47 @@
                 </v-row>
             </v-container>
         </v-main>
+
+        <v-dialog v-model="loginDialog">
+            <v-card>
+                <v-card-title>ログイン</v-card-title>
+                <v-card-text>
+                    <v-text-field
+                        v-model="credentials.email"
+                        label="メールアドレス"
+                        type="text"
+                    ></v-text-field>
+                    <v-text-field
+                        v-model="credentials.password"
+                        label="パスワード"
+                        :type="showPassword ? 'text' : 'password'"
+                        :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                        @click:append="showPassword = !showPassword"
+                    ></v-text-field>
+                    <v-btn variant="outlined" @click="loginSubmit">ログイン</v-btn>
+                    <v-btn variant="outlined">キャンセル</v-btn>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
     </v-app>
 </template>
-  
+
 <script setup>
-import { ref, onMounted } from "vue"
-import { Link } from '@inertiajs/vue3';
+import { ref } from "vue";
+import { Link } from "@inertiajs/vue3";
 
-const props = defineProps(['auth'])
-const ifAuthenticated = ref(false)
+const props = defineProps(["auth", "isAuthenticated"]);
 
-const links = ref(["Dashboard", "Messages", "Profile", "Updates", "Help"])
-onMounted(()=>{
-    console.log(props.auth.user.name)
-    if(props.auth.user.name!==undefined){
-        ifAuthenticated = true
-    } else {
-        ifAuthenticated = false
-    }
-})
+const links = ref(["Dashboard", "Messages", "Profile", "Updates", "Help"]);
 
+const loginDialog = ref(false);
+const credentials = ref({
+    email: "",
+    password: "",
+});
+const showPassword = ref(false);
 
+const loginSubmit = ()=>{
+    console.log('submit')
+}
 </script>
