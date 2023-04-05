@@ -50,7 +50,7 @@
             </v-container>
         </v-main>
 
-        <v-dialog v-model="loginDialog">
+        <v-dialog v-model="loginDialog" width="auto">
             <v-card>
                 <v-card-title>ログイン</v-card-title>
                 <v-card-text>
@@ -91,5 +91,8 @@ const showPassword = ref(false);
 
 const loginSubmit = ()=>{
     console.log('submit')
+    axios.get('/sanctum/csrf-cookie').then(response=>{
+        console.log(response.data)
+    })
 }
 </script>
