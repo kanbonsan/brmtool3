@@ -14,9 +14,14 @@
 
                 <v-spacer></v-spacer>
 
-                <v-responsive max-width="260">
-                    <v-btn @click="loginDialog = true"> Login </v-btn>
-                </v-responsive>
+                <div>
+                    <template v-if="!isAuthenticated">
+                        <v-btn @click="loginDialog = true"> Login </v-btn>
+                        <v-btn>Register</v-btn> </template
+                    ><template v-else>
+                        <v-btn @click="logout">Logout</v-btn>
+                    </template>
+                </div>
             </v-container>
         </v-app-bar>
 
@@ -66,7 +71,9 @@
                         :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                         @click:append="showPassword = !showPassword"
                     ></v-text-field>
-                    <v-btn variant="outlined" @click="loginSubmit">ログイン</v-btn>
+                    <v-btn variant="outlined" @click="loginSubmit"
+                        >ログイン</v-btn
+                    >
                     <v-btn variant="outlined">キャンセル</v-btn>
                 </v-card-text>
             </v-card>
@@ -75,8 +82,11 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { Link } from "@inertiajs/vue3";
+import { ref, onMounted } from "vue";
+import { Link, router } from "@inertiajs/vue3";
+import axios from "axios";
+
+console.log(import.meta.env.VITE_GOOGLE_MAPS_KEY)
 
 const props = defineProps(["auth", "isAuthenticated"]);
 
@@ -89,10 +99,40 @@ const credentials = ref({
 });
 const showPassword = ref(false);
 
-const loginSubmit = ()=>{
-    console.log('submit')
-    axios.get('/sanctum/csrf-cookie').then(response=>{
-        console.log(response.data)
-    })
-}
+const loginSubmit = () => {
+    console.log("submit");
+    axios.get("/sanctum/csrf-cookie").then((response) => {
+        console.log(credentials);
+        axios
+            .post("/login", credentials.value)
+            .then((response) => router.reload())
+            .catch((e) => router.reload());
+    });
+};
+
+const logout = () => {
+    axios.post("logout").then((response) => router.reload());
+};
+
+onMounted(() => {
+    // 知らないうちにログアウトしてはいないかをチェックする
+    // そもそもログインしていなければチェックに行かない
+    setInterval(() => {
+        if (isAuthenticated) {
+            axios
+                .post("/check")
+                .then((res) => {
+                    if (!res.data.loggedin) {
+                        router.reload();
+                    } else {
+                        console.log("loggedin");
+                    }
+                })
+                .catch((e) => {
+                    console.log("loggedout");
+                    router.reload();
+                });
+        }
+    }, 60_000);
+});
 </script>

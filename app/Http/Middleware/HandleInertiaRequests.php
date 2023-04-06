@@ -32,9 +32,7 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
-            'isAuthenticated' => [
-                Auth::check()
-            ],
+            'isAuthenticated' => Auth::check(),
             'auth' => [
                 'user' => $request->user(),
             ],
@@ -45,4 +43,6 @@ class HandleInertiaRequests extends Middleware
             },
         ]);
     }
+
+   
 }
