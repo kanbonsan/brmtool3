@@ -5,7 +5,6 @@ import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
-import VueGoogleMaps from '@fawmi/vue-google-maps'
 
 // Vuetify
 import 'vuetify/styles'
@@ -37,11 +36,6 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue, Ziggy)
             .use(vuetify)
-            // .use(VueGoogleMaps,{
-            //   load:{
-            //     key: import.meta.env.VITE_GOOGLE_MAPS_KEY
-            //   }
-            // })
             .mount(el);
     },
     progress: {

@@ -26,35 +26,11 @@
         </v-app-bar>
 
         <v-main class="bg-grey-lighten-3">
-            <v-container>
-                <v-row>
-                    <v-col cols="2">
-                        <v-sheet rounded="lg">
-                            <v-list rounded="lg">
-                                <v-list-item v-for="n in 5" :key="n" link>
-                                    <v-list-item-title>
-                                        List Item {{ n }}
-                                    </v-list-item-title>
-                                </v-list-item>
-
-                                <v-divider class="my-2"></v-divider>
-
-                                <v-list-item link color="grey-lighten-4">
-                                    <v-list-item-title>
-                                        Refresh
-                                    </v-list-item-title>
-                                </v-list-item>
-                            </v-list>
-                        </v-sheet>
-                    </v-col>
-
-                    <v-col>
-                        <slot />
-                    </v-col>
-                </v-row>
-            </v-container>
+            <v-responsive height="100%">
+                <slot />
+            </v-responsive>
         </v-main>
-
+        
         <v-dialog v-model="loginDialog" width="auto">
             <v-card>
                 <v-card-title>ログイン</v-card-title>
@@ -86,7 +62,7 @@ import { ref, onMounted } from "vue";
 import { Link, router } from "@inertiajs/vue3";
 import axios from "axios";
 
-console.log(import.meta.env.VITE_GOOGLE_MAPS_KEY)
+console.log(import.meta.env.VITE_GOOGLE_MAPS_KEY);
 
 const props = defineProps(["auth", "isAuthenticated"]);
 
