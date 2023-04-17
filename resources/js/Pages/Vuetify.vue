@@ -10,6 +10,7 @@ export default {
 import { ref, watch } from "vue";
 import { Head } from "@inertiajs/vue3";
 import { GoogleMap, Marker } from "vue3-google-map";
+import brm from "../../sample/sample1000.brm.json"
 
 const props = defineProps(["canLogin", "canRegister"]);
 
