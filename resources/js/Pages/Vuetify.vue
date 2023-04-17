@@ -1,9 +1,9 @@
 <script>
-import Layout from "@/Layouts/MainLayout.vue";
+import Layout from "@/Layouts/MainLayout.vue"
 
 export default {
     layout: Layout,
-};
+}
 </script>
 
 <script setup>
@@ -12,15 +12,15 @@ import { Head } from "@inertiajs/vue3";
 import { GoogleMap, Marker } from "vue3-google-map";
 import brm from "../../sample/sample1000.brm.json"
 
-const props = defineProps(["canLogin", "canRegister"]);
+const props = defineProps(["canLogin", "canRegister"])
 
-const apiKey = ref(import.meta.env.VITE_GOOGLE_MAPS_KEY);
-const center = ref({ lat: 40.689247, lng: -74.044502 });
+const apiKey = ref(import.meta.env.VITE_GOOGLE_MAPS_KEY)
+const center = ref({ lat: 40.689247, lng: -74.044502 })
 
 const gmap = ref(null)
 
-watch(()=> gmap.value?.ready, (ready)=>{
-    if(!ready) {
+watch(() => gmap.value?.ready, (ready) => {
+    if (!ready) {
         console.log('not ready')
         return
     }
@@ -30,13 +30,8 @@ watch(()=> gmap.value?.ready, (ready)=>{
 </script>
 
 <template>
-    <GoogleMap
-        ref="gmap"
-        :api-key="apiKey"
-        style="width: 100%; height: 100%"
-        :center="center"
-        :zoom="15"
-    >
+    <GoogleMap ref="gmap" :api-key="apiKey" style="width: 100%; height: 100%" :center="center" :zoom="15">
         <Marker :options="{ position: center }" />
     </GoogleMap>
 </template>
+
