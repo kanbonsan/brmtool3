@@ -1,47 +1,110 @@
 <script>
-import Layout from "@/Layouts/MainLayout.vue"
-import { compileScript } from "@vue/compiler-sfc"
+import Layout from "@/Layouts/MainLayout.vue";
+import { compileScript } from "@vue/compiler-sfc";
 
 export default {
     layout: Layout,
-}
+};
 </script>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, onMounted, computed } from "vue";
 import { Head } from "@inertiajs/vue3";
 import { GoogleMap, Marker } from "vue3-google-map";
-import brm from "../../sample/sample1000.brm.json"
+import brm from "../../sample/sample1000.brm.json";
 
-import {useBrmRouteStore} from '@/stores/BrmRouteStore'
+import { useBrmRouteStore } from "@/stores/BrmRouteStore";
+import { useGmapStore } from "@/stores/GmapStore";
 
+import { debounce } from "lodash";
 
-const props = defineProps(["canLogin", "canRegister"])
+const props = defineProps(["canLogin", "canRegister"]);
 
-const apiKey = ref(import.meta.env.VITE_GOOGLE_MAPS_KEY)
-const center = ref({ lat: 40.689247, lng: -74.044502 })
+const apiKey = ref(import.meta.env.VITE_GOOGLE_MAPS_KEY);
+const center = ref({ lat: 35.2418, lng: 137.1146 });
 
-const store = useBrmRouteStore()
+const store = useBrmRouteStore();
+const gmapStore = useGmapStore();
 
-const gmap = ref(null)
+const gmap = ref(null);
 
-store.$subscribe((mutation,state)=>{
-    console.log('changed',mutation.type)
-})
+const available = computed(() => store.availablePoints.length);
 
-watch(() => gmap.value?.ready, (ready) => {
-    if (!ready) {
-        return
+const message = ref("hello");
+
+store.$subscribe((mutation, state) => {
+    console.log("changed", mutation.type);
+});
+
+watch(
+    () => gmap.value?.ready,
+    (ready) => {
+        if (!ready) {
+            return;
+        }
+        const map = gmap.value.map;
+        gmapStore.map = map;
+        store.setPoints(brm.encodedPathAlt);
+
+        map.addListener(
+            "bounds_changed",
+            debounce(() => {
+                const _bb = map.getBounds();
+                const _sw = _bb.getSouthWest();
+                const _ne = _bb.getNorthEast();
+                gmapStore.bounds = {
+                    north: _ne.lat(),
+                    south: _sw.lat(),
+                    east: _ne.lng(),
+                    west: _sw.lng(),
+                };
+                gmapStore.latLngBounds = map.getBounds();
+                message.value = available;
+            }, 1000)
+        );
+        map.addListener("zoom_changed", () => {
+            gmapStore.zoom = map.getZoom();
+        });
+        map.addListener("click", (ev) => {
+            message.value = `${ev.latLng.lat()}:${ev.latLng.lng()}`;
+        });
     }
-    console.log(store.lastId)
-    store.setPoints(brm.encodedPathAlt)
-})
+);
 
+onMounted(() => {
+    console.log("mounted");
+});
+
+const markerClick = (index)=>console.log('marker %d clicked', index)
 </script>
 
 <template>
-    <GoogleMap ref="gmap" :api-key="apiKey" style="width: 100%; height: 100%" :center="center" :zoom="15" v-slot="slotProps">
-        <Marker :options="{ position: center }" />
+    <GoogleMap
+        ref="gmap"
+        :api-key="apiKey"
+        style="width: 100%; height: 100%"
+        :center="center"
+        :zoom="10"
+        v-slot="slotProps"
+    >
+        <Marker
+            :options="{ position: pt }"
+            v-for="pt in store.availablePoints"
+            :key="pt.id"
+            @click="markerClick(pt.id)"
+        />
     </GoogleMap>
+    <div
+        style="
+            position: fixed;
+            left: 100px;
+            bottom: 100px;
+            width: 300px;
+            height: 80px;
+            background-color: white;
+            z-index: 1000;
+        "
+    >
+        {{ message }}
+    </div>
 </template>
-

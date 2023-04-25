@@ -4,11 +4,15 @@ import { simplifyPath } from '@/lib/douglasPeucker'
 import { hubeny } from '@/lib/hubeny'
 import { HubenyCorrection } from '@/config.js'
 
+import { useGmapStore } from '@/stores/GmapStore.js'
+
 const simplifyParam = [
     { weight: 3, tolerance: 0.000015 },
     { weight: 5, tolerance: 0.00005 },
     { weight: 7, tolerance: 0.0002 }
 ]
+
+
 
 
 export const useBrmRouteStore = defineStore('brmroute', {
@@ -21,7 +25,13 @@ export const useBrmRouteStore = defineStore('brmroute', {
     getters: {
 
         /** simplify 用の配列（x,y) を用意 */
-        pointsArray: (state) => state.points.map((pt, index) => ({ x: pt.lng ?? 0, y: pt.lat ?? 0, index }))
+        pointsArray: (state) => state.points.map((pt, index) => ({ x: pt.lng ?? 0, y: pt.lat ?? 0, index })),
+
+        /** map 内におさまるポイント */
+        availablePoints: (state)=>state.points.filter((pt)=>{
+            const gmapStore = useGmapStore()
+            return gmapStore.latLngBounds.contains(pt) && pt.weight>1
+        })
     },
 
     actions: {

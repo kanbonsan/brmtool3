@@ -4,9 +4,9 @@ export const useGmapStore = defineStore('gmap', {
 
     state: () => ({
 
-        center: { lat: null, lng: null },
+        center: { lat: 35.2517, lng: 137.1146 },
         zoom: 10,
-        bounds: { nw: { lat: null, lng: null }, se: { lat: null, lng: null } }
-
+        bounds: { north: null, south: null, east: null, west: null },
+        latLngBounds: null,
     })
 })
