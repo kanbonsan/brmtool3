@@ -28,10 +28,13 @@ export const useBrmRouteStore = defineStore('brmroute', {
         pointsArray: (state) => state.points.map((pt, index) => ({ x: pt.lng ?? 0, y: pt.lat ?? 0, index })),
 
         /** map 内におさまるポイント */
-        availablePoints: (state)=>state.points.filter((pt)=>{
+        availablePoints: (state) => state.points.filter((pt) => {
             const gmapStore = useGmapStore()
-            return gmapStore.latLngBounds.contains(pt) && pt.weight>1
-        })
+            return gmapStore.latLngBounds.contains(pt) && pt.weight > 1
+        }),
+
+        /** point id からポイントを抽出 */
+        getPointById: (state) => (id) => state.points.find(pt => pt.id === id),
     },
 
     actions: {
