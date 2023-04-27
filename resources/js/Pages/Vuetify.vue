@@ -102,7 +102,7 @@ const markerClick = (id) => {
             :options="markerOption(pt)"
             v-for="(pt, index) in store.availablePoints"
             :key="pt.id"
-            @click="markerClick(pt.id)"
+            @mouseover="markerClick(pt.id)"
         />
         <Polyline :options="polylineOption" />
     </GoogleMap>
