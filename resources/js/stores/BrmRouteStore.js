@@ -12,9 +12,6 @@ const simplifyParam = [
     { weight: 7, tolerance: 0.0002 }
 ]
 
-
-
-
 export const useBrmRouteStore = defineStore('brmroute', {
 
     state: () => ({
@@ -30,11 +27,16 @@ export const useBrmRouteStore = defineStore('brmroute', {
         /** map 内におさまるポイント */
         availablePoints: (state) => state.points.filter((pt) => {
             const gmapStore = useGmapStore()
-            return gmapStore.latLngBounds.contains(pt) && pt.weight > 1
+            return gmapStore.latLngBounds.contains(pt) && pt.weight > 5
         }),
 
-        /** point id からポイントを抽出 */
-        getPointById: (state) => (id) => state.points.find(pt => pt.id === id),
+        polylinePoints: (state)=>state.points.filter(pt=>pt.weight>=5),
+
+        /** point id からポイントインデックスを抽出 */
+        getPointById: (state) => {
+            return (id) => state.points.findIndex(pt => pt.id === id)
+        },
+
     },
 
     actions: {
@@ -42,7 +44,7 @@ export const useBrmRouteStore = defineStore('brmroute', {
 
             const _points = polyline.decode(path)
             this.points = [...(_points.map((pt, index) => {
-                return ({ ...pt, id: this.lastId + index + 1, weight: 1, distance: 0.0, routeDistance: 0.0, brmDistance: 0.0 })
+                return ({ ...pt, id: this.lastId + index + 1, weight: 1, distance: 0.0, routeDistance: 0.0, brmDistance: 0.0, opacity: 1.0 })
             }))]
             this.lastId += _points.length
 
