@@ -16,6 +16,8 @@ import brm from "../../sample/sample1000.brm.json";
 import { useBrmRouteStore } from "@/stores/BrmRouteStore";
 import { useGmapStore } from "@/stores/GmapStore";
 
+import CustomModal from "@/Components/CustomModal"
+
 import { debounce } from "lodash";
 
 const props = defineProps(["canLogin", "canRegister"]);
@@ -28,10 +30,12 @@ const gmapStore = useGmapStore();
 
 const gmap = ref(null);
 
+const show = ref(true)
+
 const polylineOption = ref({
     path: store.polylinePoints,
     strokeColor: "blue",
-    strokeWeight: 2,
+    strokeWeight: 10,
 })
 
 const message = ref("");
@@ -118,4 +122,10 @@ const markerClick = (id) => {
     >
         {{ message }}
     </div>
+
+    <!-- <custom-modal v-model="show" @confirm="confirm" @cancel="cancel">
+      <template v-slot:title>Hello, vue-final-modal</template>
+      <p>Vue Final Modal is a renderless, stackable, detachable and lightweight modal component.</p>
+    </custom-modal> -->
+
 </template>
