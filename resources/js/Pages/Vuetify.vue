@@ -15,8 +15,9 @@ import brm from "../../sample/sample1000.brm.json";
 
 import { useBrmRouteStore } from "@/stores/BrmRouteStore";
 import { useGmapStore } from "@/stores/GmapStore";
+import circle from '../../images/pointCircle.png'
 
-import CustomModal from "@/Components/CustomModal"
+//import CustomModal from "@/Components/CustomModal"
 
 import { debounce } from "lodash";
 
@@ -34,8 +35,8 @@ const show = ref(true)
 
 const polylineOption = ref({
     path: store.polylinePoints,
-    strokeColor: "blue",
-    strokeWeight: 10,
+    strokeColor: "red",
+    strokeWeight: 1,
 })
 
 const message = ref("");
@@ -83,6 +84,7 @@ const markerOption = (pt) => {
     return { 
         position: pt,
         opacity: pt.opacity,
+        icon: circle
      };
 };
 

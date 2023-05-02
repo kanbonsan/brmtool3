@@ -5,6 +5,7 @@ import { hubeny } from '@/lib/hubeny'
 import { HubenyCorrection } from '@/config.js'
 
 import { useGmapStore } from '@/stores/GmapStore.js'
+import { RoutePoint} from '@/classes/routePoint'
 
 const simplifyParam = [
     { weight: 3, tolerance: 0.000015 },
@@ -17,6 +18,7 @@ export const useBrmRouteStore = defineStore('brmroute', {
     state: () => ({
         lastId: -1,
         points: [],
+        clsPoints:[]
     }),
 
     getters: {
@@ -52,6 +54,8 @@ export const useBrmRouteStore = defineStore('brmroute', {
             this.setWeight()
 
             this.setDistance()
+
+            this.clsPoints = _points.map(()=>{})
 
         },
         /** ポイントウエイトのリセット / weight=10 はリセットしない */
@@ -114,7 +118,6 @@ export const useBrmRouteStore = defineStore('brmroute', {
 
             // 
 
-        }
-
+        },
     }
 })
