@@ -5,7 +5,7 @@ import { hubeny } from '@/lib/hubeny'
 import { HubenyCorrection } from '@/config.js'
 
 import { useGmapStore } from '@/stores/GmapStore.js'
-import { RoutePoint} from '@/classes/routePoint'
+import { RoutePoint } from '@/classes/routePoint'
 
 const simplifyParam = [
     { weight: 3, tolerance: 0.000015 },
@@ -18,7 +18,7 @@ export const useBrmRouteStore = defineStore('brmroute', {
     state: () => ({
         lastId: -1,
         points: [],
-        clsPoints:[]
+        clsPoints: []
     }),
 
     getters: {
@@ -32,7 +32,7 @@ export const useBrmRouteStore = defineStore('brmroute', {
             return gmapStore.latLngBounds.contains(pt) && pt.weight > 5
         }),
 
-        polylinePoints: (state)=>state.points.filter(pt=>pt.weight>=5),
+        polylinePoints: (state) => state.points.filter(pt => pt.weight >= 5),
 
         /** point id からポイントインデックスを抽出 */
         getPointById: (state) => {
@@ -55,7 +55,7 @@ export const useBrmRouteStore = defineStore('brmroute', {
 
             this.setDistance()
 
-            this.clsPoints = _points.map(()=>{})
+            this.clsPoints = _points.map(() => { })
 
         },
         /** ポイントウエイトのリセット / weight=10 はリセットしない */
@@ -119,5 +119,13 @@ export const useBrmRouteStore = defineStore('brmroute', {
             // 
 
         },
+
+        deviate(begin = 50, end = 100) {
+            for (let i = begin; i <= 100; i++) {
+                const pt = { ...this.points[i] }
+                pt.lng += 0.01
+                this.points.splice(i, 1, pt)
+            }
+        }
     }
 })
