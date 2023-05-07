@@ -17,6 +17,8 @@ import { useBrmRouteStore } from "@/stores/BrmRouteStore"
 import { useGmapStore } from "@/stores/GmapStore"
 import circle from '../../images/pointCircle.png'
 
+import BrmPolyline from "@/Components/BrmPolyline.vue"
+
 //import CustomModal from "@/Components/CustomModal"
 
 import { debounce } from "lodash"
@@ -29,20 +31,10 @@ const center = ref({ lat: 35.2418, lng: 137.1146 })
 const store = useBrmRouteStore()
 
 const availablePoints = computed(()=>store.availablePoints)
-const polyReady = ref(false)
 
 const gmapStore = useGmapStore()
 
 const gmap = ref(null)
-const poly = ref(null)
-
-const show = ref(true)
-
-const polylineOption = ref({
-    path: [],
-    strokeColor: "red",
-    strokeWeight: 1,
-})
 
 const message = ref("")
 
@@ -59,11 +51,6 @@ onMounted(() => {
         store.deviate()
         console.log('deviated')
     }, 10000)
-
-    setTimeout(()=>{
-        console.log('polyReady')
-        polyReady.value=true
-    },1000)
 })
 
 
@@ -73,7 +60,6 @@ watch(
         if (!ready) {
             return
         }
-        console.log('ready1')
         const map = gmap.value.map
         gmapStore.map = map
         store.setPoints(brm.encodedPathAlt)
@@ -103,14 +89,6 @@ watch(
     }
 )
 
-watch(
-    ()=>store.polylinePoints,
-    (polylinePoints)=>{
-        
-        console.log(poly.value.polyline?.setPath(polylinePoints))
-    }
-)
-
 const markerOption = (pt) => {
     return {
         position: pt,
@@ -129,10 +107,9 @@ const markerClick = (id) => {
 <template>
     <GoogleMap ref="gmap" :api-key="apiKey" style="width: 100%; height: 100%" :center="center" :zoom="15"
         v-slot="slotProps">
-        <Polyline v-if="polyReady" ref="poly" :options="polylineOption" />
         <Marker :options="markerOption(pt)" v-for="(pt, index) in store.availablePoints" :key="pt.id"
             @mouseover="markerClick(pt.id)" />
-        
+        <BrmPolyline :api="slotProps.api" :map="slotProps.map" :ready="slotProps.ready" />
     </GoogleMap>
     <div style="position: fixed;
             left: 100px;
