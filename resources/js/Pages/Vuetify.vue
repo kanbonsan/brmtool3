@@ -11,7 +11,7 @@ import { ref, watch, onMounted, computed } from "vue"
 import { storeToRefs } from "pinia"
 import { Head } from "@inertiajs/vue3"
 import { GoogleMap, Marker, Polyline } from "vue3-google-map"
-import brm from "../../sample/sample1000.brm.json"
+import brm from "../../sample/sample200.brm.json"
 
 import { useBrmRouteStore } from "@/stores/BrmRouteStore"
 import { useGmapStore } from "@/stores/GmapStore"

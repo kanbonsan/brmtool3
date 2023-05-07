@@ -41,11 +41,12 @@ export const useBrmRouteStore = defineStore('brmroute', {
         },
 
         excludedRanges: (state) => {
+            console.log('calc exclude')
             const arr = []
             let begin = null
             let end = null
             for (let i = 0; i < state.count; i++) {
-                const pt = this.points[i]
+                const pt = state.points[i]
                 if (pt.excluded === true) {
                     if (!begin) {
                         begin = end = i
@@ -193,6 +194,7 @@ export const useBrmRouteStore = defineStore('brmroute', {
 
                 this.points[i].lng += 0.01
                 this.points[i].id = Symbol()
+                this.points[i].excluded = true
 
             }
             this.setWeight()
