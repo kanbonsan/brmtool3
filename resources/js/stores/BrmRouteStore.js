@@ -39,7 +39,11 @@ export const useBrmRouteStore = defineStore('brmroute', {
         getPointById: (state) => {
             return (id) => state.points.findIndex(pt => pt.id === id)
         },
-
+        /**
+         * (getter) 除外範囲の開始と終了の各インデックスを求める
+         * @returns 除外フラグの立つポイントの前後ポイントを[begin, end]のタプルとしてその配列を返す
+         *     除外polylineはその間を描画させれば良い
+         */
         excludedRanges: (state) => {
 
             const arr = []
