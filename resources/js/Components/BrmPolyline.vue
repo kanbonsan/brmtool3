@@ -1,3 +1,11 @@
+<script>
+export default {
+    render() {
+        return this.$scopedSlots.default({});
+    },
+};
+</script>
+
 <script setup>
 import { ref, watch, onMounted, computed, inject } from "vue";
 import { useBrmRouteStore } from "@/stores/BrmRouteStore";
@@ -22,9 +30,9 @@ watch(
         poly.setPath(store.polylinePoints);
         poly.setMap(props.map);
 
-        store.$subscribe(()=>{
-            poly.setPath(store.polylinePoints)
-        })
+        store.$subscribe(() => {
+            poly.setPath(store.polylinePoints);
+        });
     }
 );
 </script>

@@ -41,27 +41,26 @@ export const useBrmRouteStore = defineStore('brmroute', {
         },
 
         excludedRanges: (state) => {
-            console.log('calc exclude')
+
             const arr = []
-            let begin = null
-            let end = null
+            let begin
+            let end
             for (let i = 0; i < state.count; i++) {
                 const pt = state.points[i]
                 if (pt.excluded === true) {
                     if (!begin) {
-                        begin = end = i
-                    } else {
-                        end = i
+                        begin = i
                     }
+                    end = i
                 } else {
                     if (begin) {
                         arr.push([begin, end])
-                        begin = end = null
+                        begin = null
+                        end = null
                     }
                 }
             }
-
-            return arr.length === 0 ? arr : arr.map((range) => ([Math.max(range[0] - 1, 0), Math.min(range[1] + 1, this.count - 1)]))
+            return arr.length === 0 ? arr : arr.map((range) => ([Math.max(range[0] - 1, 0), Math.min(range[1] + 1, state.count - 1)]))
         }
     },
 
@@ -152,7 +151,7 @@ export const useBrmRouteStore = defineStore('brmroute', {
          * @param {Number} begin 除外開始インデックス
          * @param {Number} end 除外終了インデックス
          */
-        setExcludeFlag(begin, end) {
+        setExclude(begin, end) {
             let _begin = Math.min(begin, end)
             let _end = Math.max(begin, end)
 
@@ -178,7 +177,7 @@ export const useBrmRouteStore = defineStore('brmroute', {
          * @param {Number} begin 開始インデックス
          * @param {Number} end 終了インデックス
          */
-        restoreExcludeFlag(begin, end) {
+        restoreExclude(begin, end) {
             if (begin < 0 || _end >= this.count) {
                 throw new Error("restoreExcludeFlag: 範囲が適切ではありません.")
             }
@@ -194,7 +193,6 @@ export const useBrmRouteStore = defineStore('brmroute', {
 
                 this.points[i].lng += 0.01
                 this.points[i].id = Symbol()
-                this.points[i].excluded = true
 
             }
             this.setWeight()

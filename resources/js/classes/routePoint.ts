@@ -18,11 +18,11 @@ export class RoutePoint {
     voluntary: boolean = false;
 
     /** 前の点からの距離（ポイントの増減時でも部分的な更新に留めるために保持） メートル */
-    pointDistance: number=0.0;
+    pointDistance: number = 0.0;
     /** 全行程の積算距離（除外部分を含む）メートル*/
-    routeDistance: number=0.0;
+    routeDistance: number = 0.0;
     /** 除外部分を除くブルベ距離 メートル */
-    brmDistance: number=0.0;
+    brmDistance: number = 0.0;
 
     constructor(lat: number = 0.0, lng: number = 0.0, alt?: number) {
         this.id = Symbol();
@@ -32,7 +32,7 @@ export class RoutePoint {
     }
 
     /** 複製したポイントを返す. ID は新たに振る */
-    clone(){
-        return new RoutePoint(this.lat,this.lng,this.alt)
+    clone() {
+        return new RoutePoint(this.lat, this.lng, this.alt);
     }
 }

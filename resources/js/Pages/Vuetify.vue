@@ -45,12 +45,16 @@ store.$subscribe((mutation, state) => {
 onMounted(() => {
     setTimeout(() => {
         store.deviate()
+        store.setExclude(30,50)
         console.log('deviated')
     }, 5000)
     setTimeout(() => {
         store.deviate()
         console.log('deviated')
     }, 10000)
+    setInterval(()=>{
+        console.log(store.excludedRanges)
+    },5000)
 })
 
 
@@ -121,9 +125,4 @@ const markerClick = (id) => {
         ">
         {{ message }}
     </div>
-
-    <!-- <custom-modal v-model="show" @confirm="confirm" @cancel="cancel">
-      <template v-slot:title>Hello, vue-final-modal</template>
-      <p>Vue Final Modal is a renderless, stackable, detachable and lightweight modal component.</p>
-    </custom-modal> -->
 </template>
