@@ -1,14 +1,8 @@
-<script>
-export default {
-    render() {
-        return this.$scopedSlots.default({});
-    },
-};
-</script>
 
 <script setup>
 import { ref, watch, onMounted, computed, inject } from "vue";
 import { useBrmRouteStore } from "@/stores/BrmRouteStore";
+import ExcludedPolyline from "./ExcludedPolyline.vue"
 
 const props = defineProps(["api", "map", "ready"]);
 const store = useBrmRouteStore();
@@ -36,3 +30,7 @@ watch(
     }
 );
 </script>
+
+<template>
+    <ExcludedPolyline/>
+</template>

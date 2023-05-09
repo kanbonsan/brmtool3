@@ -41,11 +41,10 @@ export const useBrmRouteStore = defineStore('brmroute', {
         },
         /**
          * (getter) 除外範囲の開始と終了の各インデックスを求める
-         * @returns 除外フラグの立つポイントの前後ポイントを[begin, end]のタプルとしてその配列を返す
-         *     除外polylineはその間を描画させれば良い
+         * リアクティブに polyline を書き換えてもらうために unique ID を Symbol() で振る
+         * @returns Array<{ begin, end, id: Symbol()}>
          */
         excludedRanges: (state) => {
-
             const arr = []
             let begin
             let end
@@ -58,14 +57,30 @@ export const useBrmRouteStore = defineStore('brmroute', {
                     end = i
                 } else {
                     if (begin) {
-                        arr.push([begin, end])
+                        arr.push({ begin, end })
                         begin = null
                         end = null
                     }
                 }
             }
-            return arr.length === 0 ? arr : arr.map((range) => ([Math.max(range[0] - 1, 0), Math.min(range[1] + 1, state.count - 1)]))
+            // 除外区間がない場合
+            if (arr.length === 0) { return arr }
+
+            return arr.map((range) => {
+                const begin = Math.max(range.begin - 1, 0)
+                const end = Math.min(range.end + 1, state.count - 1)
+                const points = []
+                points.push(state.points[begin])
+                for (let i = begin + 1; i < end; i++) {
+                    if (state.points[i].weight >= 3) {
+                        points.push(state.points[i])
+                    }
+                }
+                points.push(state.points[end])
+                return ({ begin, end, points, id: Symbol() })
+            })
         }
+
     },
 
     actions: {
@@ -182,17 +197,17 @@ export const useBrmRouteStore = defineStore('brmroute', {
          * @param {Number} end 終了インデックス
          */
         restoreExclude(begin, end) {
-            if (begin < 0 || _end >= this.count) {
+            if (begin < 0 || end >= this.count) {
                 throw new Error("restoreExcludeFlag: 範囲が適切ではありません.")
             }
             for (let i = begin; i <= end; i++) {
-                this.points[i].exluded = false
+                this.points[i].excluded = false
             }
         },
 
         // 以下はテスト・実験用
 
-        deviate(begin = 50, end = 100) {
+        deviate(begin = 100, end = 200) {
             for (let i = begin; i <= 100; i++) {
 
                 this.points[i].lng += 0.01

@@ -45,16 +45,15 @@ store.$subscribe((mutation, state) => {
 onMounted(() => {
     setTimeout(() => {
         store.deviate()
-        store.setExclude(30,50)
+        store.setExclude(10,50)
         console.log('deviated')
     }, 5000)
     setTimeout(() => {
         store.deviate()
+        store.setExclude( 300,350)
         console.log('deviated')
     }, 10000)
-    setInterval(()=>{
-        console.log(store.excludedRanges)
-    },5000)
+    
 })
 
 
