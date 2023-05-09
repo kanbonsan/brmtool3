@@ -46,12 +46,12 @@ onMounted(() => {
     setTimeout(() => {
         store.deviate()
         store.setExclude(10,50)
+        store.setExclude( 300,350)
         console.log('deviated')
     }, 5000)
     setTimeout(() => {
-        store.deviate()
-        store.setExclude( 300,350)
-        console.log('deviated')
+        store.delete(100,200)
+        console.log('delete')
     }, 10000)
     
 })

@@ -215,6 +215,10 @@ export const useBrmRouteStore = defineStore('brmroute', {
 
             }
             this.setWeight()
+        },
+
+        delete(begin=1450,end=1499){
+            this.points.splice(begin,end-begin)
         }
     }
 })
