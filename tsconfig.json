@@ -8,5 +8,9 @@
         "skipLibCheck": true,
         "noImplicitAny": false
     },
-    "include": ["resources/js/**/*"]
+    "include": [
+        "resources/js/**/*.ts",
+        "resources/js/**/*.d.ts",
+        "resources/js/**/*.vue"
+    ]
 }
